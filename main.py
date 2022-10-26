@@ -25,3 +25,6 @@ def generate2():
     matrix = generator.builder(namegroup, size, limit, task)
 
     return jsonify({'matrix': matrix})
+
+
+app.run()
