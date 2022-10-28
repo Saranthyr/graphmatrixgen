@@ -15,6 +15,7 @@ def generate1():
 
     return jsonify({'matrix': matrix})
 
+
 @app.route('/generate2')
 def generate2():
     namegroup = request.form.get('input')
@@ -28,5 +29,5 @@ def generate2():
 
 
 if __name__ == "__main__":
-    app.run()
+    app.run(host="0.0.0.0")
 
