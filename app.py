@@ -5,6 +5,11 @@ import generator
 app = Flask(__name__)
 
 
+@app.route('/')
+def generic():
+    return jsonify({'сосать'})
+
+
 @app.route('/generate1')
 def generate1():
     namegroup = request.form.get('input')
