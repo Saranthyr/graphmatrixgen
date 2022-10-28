@@ -26,5 +26,3 @@ def generate2():
 
     return jsonify({'matrix': matrix})
 
-
-app.run()
