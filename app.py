@@ -10,7 +10,7 @@ def generic():
     return jsonify({'сосать'})
 
 
-@app.route('/generate1')
+@app.route('/generate1', methods=['POST'])
 def generate1():
     namegroup = request.form.get('input')
     size = int(request.form.get('size'))
@@ -21,7 +21,7 @@ def generate1():
     return jsonify({'matrix': matrix})
 
 
-@app.route('/generate2')
+@app.route('/generate2', methods=['POST'])
 def generate2():
     namegroup = request.form.get('input')
     size = int(request.form.get('size'))
