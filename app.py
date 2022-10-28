@@ -1,8 +1,12 @@
 from flask import Flask, request, jsonify
 import generator
+import flask_cors
 
 
 app = Flask(__name__)
+
+
+flask_cors.CORS(app)
 
 
 @app.route('/')
