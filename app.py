@@ -27,13 +27,17 @@ def generate1():
 
 @app.route('/generate2', methods=['POST'])
 def generate2():
-    namegroup = request.form.get('input')
-    size = int(request.form.get('size'))
-    limit = int(request.form.get('limit'))
-    task = int(request.form.get('task_number'))
+    try:
+        namegroup = request.form.get('input')
+        size = int(request.form.get('size'))
+        limit = int(request.form.get('limit'))
+        task = int(request.form.get('task_number'))
 
-    matrix = generator.builder(namegroup, size, limit, task)
+        matrix = generator.builder(namegroup, size, limit, task)
 
-    return jsonify({'matrix': matrix})
+        return jsonify({'matrix': matrix})
+    except:
+        return jsonify({'data': request.data,
+                        'formdata': request.form})
 
 
