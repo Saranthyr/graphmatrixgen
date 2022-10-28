@@ -4,7 +4,7 @@ import random
 
 def array_gen(size, seed, limit, iteration):
     arr = []
-    if iteration:
+    if iteration is not None:
         seed += hashlib.sha256(bytes(str(iteration), 'utf-8')).hexdigest()
     random.seed(bytes(seed, 'utf-8'))
     zeroes = 100 // random.randint(10, 40)
