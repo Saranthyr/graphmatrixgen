@@ -37,7 +37,7 @@ def generate2():
 
         return jsonify({'matrix': matrix})
     except:
-        return jsonify({'data': request.data,
-                        'formdata': request.form})
+        return jsonify({'data': str(request.data),
+                        'formdata': str(request.form)})
 
 
