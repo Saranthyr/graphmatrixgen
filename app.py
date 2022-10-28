@@ -26,3 +26,7 @@ def generate2():
 
     return jsonify({'matrix': matrix})
 
+
+if __name__ == "__main__":
+    app.run()
+
