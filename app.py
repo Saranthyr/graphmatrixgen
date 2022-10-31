@@ -1,13 +1,22 @@
 from flask import Flask, request, jsonify
 import flask_sqlalchemy
+from sqlalchemy import MetaData
+
 import generator
 import flask_cors
 import re
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = \
-    f'mysql+mysqlconnector://std_1875_graphmatrixgen:Vjt_gjxntybt1!@std-mysql/std_1875_graphmatrixgen'
-db = flask_sqlalchemy.SQLAlchemy(app)
+    f'mysql+pymysql://std_1875_graphmatrixgen:Vjt_gjxntybt1@std-mysql/std_1875_graphmatrixgen?charset=utf8'
+app.config['NAMING_CONVENTION'] = {
+    'pk': 'pk_%(table_name)s',
+    'fk': 'fk_%(table_name)s_%(column_0_name)s_%(referred_table_name)s',
+    'ix': 'ix_%(table_name)s_%(column_0_name)s',
+    'uq': 'uq_%(table_name)s_%(column_0_name)s',
+    'ck': 'ck_%(table_name)s_%(constraint_name)s',
+}
+db = flask_sqlalchemy.SQLAlchemy(app, metadata=MetaData(naming_convention=app.config['NAMING_CONVENTION']))
 
 flask_cors.CORS(app)
 
