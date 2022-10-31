@@ -28,7 +28,7 @@ def generic():
 
 @app.route('/generate_without_task_number', methods=['POST'])
 def generate_base():
-    namegroup = request.form.get('input')
+    namegroup = request.form.get('namegroup')
     size = int(request.form.get('size'))
     limit = int(request.form.get('limit'))
     if re.fullmatch('[А-Яа-я0-9-]+', namegroup):
