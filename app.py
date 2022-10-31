@@ -31,10 +31,11 @@ def generate_base():
     namegroup = request.form.get('input')
     size = int(request.form.get('size'))
     limit = int(request.form.get('limit'))
-
-    matrix = generator.builder_hashlib(namegroup, size, limit)
-
-    return jsonify({'matrix': matrix})
+    if re.fullmatch('[А-Яа-я0-9-]+', namegroup):
+        matrix = generator.builder_hashlib(namegroup, size, limit)
+        return jsonify({'matrix': matrix})
+    else:
+        return jsonify({'msg': 'incorrect name-group string'})
 
 
 @app.route('/generate_with_task_number', methods=['POST'])
