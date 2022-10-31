@@ -44,10 +44,11 @@ def generate_advanced():
     size = int(request.form.get('size'))
     limit = int(request.form.get('limit'))
     task = int(request.form.get('task_number'))
-
-    matrix = generator.builder_hashlib(namegroup, size, limit, task)
-
-    return jsonify({'matrix': matrix})
+    if re.fullmatch('[А-Яа-я0-9-]+', namegroup):
+        matrix = generator.builder_hashlib(namegroup, size, limit, task)
+        return jsonify({'matrix': matrix})
+    else:
+        return jsonify({'msg': 'incorrect name-group string'})
 
 
 @app.route('/generate_with_saving_into_db', methods=['POST'])
