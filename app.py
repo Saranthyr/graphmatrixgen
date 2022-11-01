@@ -21,6 +21,16 @@ db = flask_sqlalchemy.SQLAlchemy(app, metadata=MetaData(naming_convention=app.co
 flask_cors.CORS(app)
 
 
+@app.after_request
+def after_request(response):
+    header = response.headers
+    header['Access-Control-Allow-Origin'] = '*'
+    header['Access-Control-Allow-Headers'] = '*'
+    header['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS'
+
+    return response
+
+
 @app.route('/')
 def generic():
     return jsonify({'hi there'})
