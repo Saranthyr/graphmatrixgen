@@ -11,7 +11,7 @@ def array_gen_hashlib(size, seed, limit, iteration):
     arr = []
     seed += hashlib.sha256(bytes(str(iteration), 'utf-8')).hexdigest()
     random.seed(bytes(seed, 'utf-8'))
-    zeroes = 100 // random.randint(10, 40)
+    zeroes = 100 // random.randint(20, 50)
     for i in range(size):
         number = random.randint(-limit, limit)
         chance = random.randint(0, 100) % zeroes
