@@ -21,7 +21,7 @@ def array_gen_hashlib(size, seed, limit, iteration):
     return arr
 
 
-def builder_hashlib(string, size: int, limit: int, task_number):
+def builder_hashlib(string, size: int, limit: int, task_number=None):
     matrix = []
     string += str(limit) + str(size)
     string = hashlib.sha256(bytes(string, 'utf-8')).hexdigest()
