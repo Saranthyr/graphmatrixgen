@@ -29,7 +29,7 @@ def generate_base():
     size = int(request.form.get('size'))
     limit = int(request.form.get('limit'))
     if re.fullmatch('[А-Яа-я0-9-]+', namegroup):
-        matrix = generator.builder_hashlib(namegroup, size, limit)
+        matrix = generator.builder_hashlib(namegroup.lower(), size, limit)
         return jsonify({'matrix': matrix})
     else:
         return jsonify({'msg': 'incorrect name-group string'})
@@ -42,7 +42,7 @@ def generate_advanced():
     limit = int(request.form.get('limit'))
     task = int(request.form.get('task_number'))
     if re.fullmatch('[А-Яа-я0-9-]+', namegroup):
-        matrix = generator.builder_hashlib(namegroup, size, limit, task)
+        matrix = generator.builder_hashlib(namegroup.lower(), size, limit, task)
         return jsonify({'matrix': matrix})
     else:
         return jsonify({'msg': 'incorrect name-group string'})
