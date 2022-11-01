@@ -21,11 +21,11 @@ def array_gen_hashlib(size, seed, limit, iteration):
     return arr
 
 
-def builder_hashlib(string, size: int, limit: int, task_number=None):
+def builder_hashlib(string, size: int, limit: int, task_number):
     matrix = []
     string += str(limit) + str(size)
-    if task_number:
-        string += str(task_number)
+    string = hashlib.sha256(bytes(string, 'utf-8')).hexdigest()
+    string += hashlib.sha256(bytes(str(task_number), 'utf-8')).hexdigest()
     for i in range(size):
         seed = hashlib.sha256(bytes(string, 'utf-8')).hexdigest()
         matrix.append(array_gen_hashlib(size, seed, limit, i))
