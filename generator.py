@@ -7,16 +7,27 @@ from werkzeug.security import generate_password_hash
 from models import Students, MatrixParams
 
 
-def array_gen_hashlib(size, seed, limit, iteration):
+def array_gen_hashlib(size, seed, limit, iteration, matrix):
     arr = []
     seed += hashlib.sha256(bytes(str(iteration), 'utf-8')).hexdigest()
     random.seed(bytes(seed, 'utf-8'))
     zeroes = 100 // random.randint(25, 50)
     for i in range(size):
-        number = random.randint(-limit, limit)
-        chance = random.randint(0, 100) % zeroes
-        if chance == 0:
-            number = 0
+        number = 0
+        if matrix:
+            if i < iteration:
+                if matrix[i][iteration]:
+                    number = matrix[i][iteration]
+            else:
+                number = random.randint(-limit, limit)
+                chance = random.randint(0, 100) % zeroes
+                if chance == 0:
+                    number = 0
+        else:
+            number = random.randint(-limit, limit)
+            chance = random.randint(0, 100) % zeroes
+            if chance == 0:
+                number = 0
         arr.append(number)
     return arr
 
@@ -28,7 +39,7 @@ def builder_hashlib(string, size: int, limit: int, task_number=None):
     string += hashlib.sha256(bytes(str(task_number), 'utf-8')).hexdigest()
     for i in range(size):
         seed = hashlib.sha256(bytes(string, 'utf-8')).hexdigest()
-        matrix.append(array_gen_hashlib(size, seed, limit, i))
+        matrix.append(array_gen_hashlib(size, seed, limit, i, matrix))
     return matrix
 
 
