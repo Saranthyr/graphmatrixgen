@@ -21,6 +21,13 @@ db = flask_sqlalchemy.SQLAlchemy(app, metadata=MetaData(naming_convention=app.co
 flask_cors.CORS(app)
 
 
+@app.after_request
+def after_request(response):
+
+    print(response.headers)
+    return response
+
+
 @app.route('/')
 def generic():
     return jsonify({'hi there'})
@@ -40,7 +47,6 @@ def generate_base():
 
 @app.route('/generate_with_task_number', methods=['POST'])
 def generate_advanced():
-    print(request.headers)
     namegroup = request.form.get('namegroup')
     size = int(request.form.get('size'))
     limit = int(request.form.get('limit'))
