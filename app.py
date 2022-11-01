@@ -37,7 +37,6 @@ def generate_base():
 
 
 @app.route('/generate_with_task_number', methods=['POST'])
-@flask_cors.cross_origin('*')
 def generate_advanced():
     namegroup = request.form.get('namegroup')
     size = int(request.form.get('size'))
