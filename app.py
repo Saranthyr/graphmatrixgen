@@ -1,4 +1,3 @@
-import flask
 from flask import Flask, request, jsonify
 import flask_sqlalchemy
 from sqlalchemy import MetaData
@@ -20,13 +19,6 @@ app.config['NAMING_CONVENTION'] = {
 db = flask_sqlalchemy.SQLAlchemy(app, metadata=MetaData(naming_convention=app.config['NAMING_CONVENTION']))
 
 flask_cors.CORS(app)
-
-
-@app.after_request
-def after_request(response):
-
-    print(response.headers)
-    return response
 
 
 @app.route('/')
@@ -54,9 +46,7 @@ def generate_advanced():
     task = int(request.form.get('task_number'))
     if re.fullmatch('[А-Яа-я0-9-]+', namegroup):
         matrix = generator.builder_hashlib(namegroup, size, limit, task)
-        resp = flask.make_response(jsonify({'matrix': matrix}))
-        resp.headers['Access-Control-Allow-Origin'] = '*'
-        return resp
+        return jsonify({'matrix': matrix})
     else:
         return jsonify({'msg': 'incorrect name-group string'})
 
