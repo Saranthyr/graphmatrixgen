@@ -11,13 +11,11 @@ def array_gen_hashlib(size, seed, limit, iteration, matrix):
     arr = []
     seed += hashlib.sha256(bytes(str(iteration), 'utf-8')).hexdigest()
     random.seed(bytes(seed, 'utf-8'))
-    zeroes = 100 // random.randint(25, 50)
+    zeroes = 100 // random.randint(25, 40)
     for i in range(size):
-        number = 0
         if matrix:
             if i < iteration:
-                if matrix[i][iteration]:
-                    number = matrix[i][iteration]
+                number = matrix[i][iteration]
             else:
                 number = random.randint(-limit, limit)
                 chance = random.randint(0, 100) % zeroes
