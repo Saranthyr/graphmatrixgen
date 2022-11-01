@@ -25,7 +25,7 @@ flask_cors.CORS(app)
 def after_request(response):
     header = response.headers
     del header['Access-Control-Allow-Origin']
-
+    print(response.headers)
     return response
 
 
