@@ -3,11 +3,9 @@ import flask_sqlalchemy
 from sqlalchemy import MetaData
 
 import generator
-from flask_cors import CORS
 import re
 
 app = Flask(__name__)
-CORS(app=app)
 app.config['SQLALCHEMY_DATABASE_URI'] = \
     f'mysql+pymysql://std_1875_graphmatrixgen:Vjt_gjxntybt1@std-mysql/std_1875_graphmatrixgen?charset=utf8'
 app.config['NAMING_CONVENTION'] = {
