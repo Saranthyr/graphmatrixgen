@@ -1,3 +1,4 @@
+import flask
 from flask import Flask, request, jsonify
 import flask_sqlalchemy
 from sqlalchemy import MetaData
@@ -53,7 +54,9 @@ def generate_advanced():
     task = int(request.form.get('task_number'))
     if re.fullmatch('[А-Яа-я0-9-]+', namegroup):
         matrix = generator.builder_hashlib(namegroup, size, limit, task)
-        return jsonify({'matrix': matrix})
+        resp = flask.make_response(jsonify({'matrix': matrix}))
+        resp.headers['Access-Control-Allow-Origin'] = '*'
+        return resp
     else:
         return jsonify({'msg': 'incorrect name-group string'})
 
