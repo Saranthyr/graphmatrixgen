@@ -21,16 +21,6 @@ db = flask_sqlalchemy.SQLAlchemy(app, metadata=MetaData(naming_convention=app.co
 flask_cors.CORS(app)
 
 
-@app.after_request
-def after_request(response):
-    header = response.headers
-    header['Access-Control-Allow-Origin'] = '*'
-    header['Access-Control-Allow-Headers'] = '*'
-    header['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS'
-
-    return response
-
-
 @app.route('/')
 def generic():
     return jsonify({'hi there'})
@@ -49,6 +39,7 @@ def generate_base():
 
 
 @app.route('/generate_with_task_number', methods=['POST'])
+@flask_cors.cross_origin(origins=['http://graph-visualizer.std-1550.ist.mospolytech.ru/*'])
 def generate_advanced():
     namegroup = request.form.get('namegroup')
     size = int(request.form.get('size'))
