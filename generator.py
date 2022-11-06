@@ -36,6 +36,7 @@ def matrix_checker(matrix, negatives):
                 if 0 < matrix[j][k] < min:
                     if k == j:
                         matrix[j][k] *= -1
+                        print(matrix[j][k])
                     else:
                         matrix[j][k] *= -1
                         matrix[k][j] *= -1
