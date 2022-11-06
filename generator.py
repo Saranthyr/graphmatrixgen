@@ -35,8 +35,10 @@ def matrix_checker(matrix, negatives):
             for k in range(len(matrix)):
                 if 0 < matrix[j][k] < min:
                     if j == k:
+                        print('eq')
                         matrix[j][k] *= -1
                     else:
+                        print('norm')
                         matrix[j][k] *= -1
                         matrix[k][j] *= -1
                     min = 5
