@@ -13,7 +13,7 @@ def generic():
 
 @app.route('/generate_with_task_number', methods=['POST'])
 def generate_base():
-    namegroup = request.form.get('input')
+    namegroup = request.form.get('namegroup')
     size = int(request.form.get('size'))
     negatives = request.form.get('negatives', None)
     if re.fullmatch('[А-Яа-я0-9-]+', namegroup):
