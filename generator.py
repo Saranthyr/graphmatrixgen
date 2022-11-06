@@ -43,6 +43,7 @@ def matrix_checker(matrix, negatives):
                     min = 5
                     curr_negs += 1
                 curr_row, curr_col = j, k
+                var1 = curr_col != len(matrix) and curr_row != len(matrix)
     return matrix
 
 
