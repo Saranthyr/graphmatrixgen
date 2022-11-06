@@ -27,14 +27,15 @@ def array_gen_hashlib(size, seed, iteration, matrix):
 
 def matrix_checker(matrix, negatives):
     min = 5
-    for i in range(negatives):
+    curr_negs = 0
+    while curr_negs < negatives:
         for j in range(len(matrix)):
             for k in range(len(matrix)):
-                print(j, k)
                 if 0 < matrix[j][k] < min:
                     matrix[j][k] *= -1
                     matrix[k][j] *= -1
                     min = 5
+                    curr_negs += 1
     return matrix
 
 
