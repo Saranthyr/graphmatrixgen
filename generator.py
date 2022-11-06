@@ -2,11 +2,20 @@ import hashlib
 import random
 
 
+def check_grahp(arr):
+    num = 0
+    for i in range(len(arr)):
+        if arr[i] != 0:
+            return False
+        else:
+            return True
+
+
 def array_gen_hashlib(size, seed, iteration, matrix):
     arr = []
     seed += hashlib.sha256(bytes(str(iteration), 'utf-8')).hexdigest()
     random.seed(bytes(seed, 'utf-8'))
-    zeroes = 100 // random.randint(15, 25)
+    zeroes = 100 // random.randint(20, 40)
     for i in range(size):
         if matrix:
             if i < iteration:
@@ -17,11 +26,14 @@ def array_gen_hashlib(size, seed, iteration, matrix):
                 if chance == 0:
                     number = 0
         else:
-            number = random.randint(0, 20)
+            number = random.randint(0, 15)
             chance = random.randint(0, 100) % zeroes
             if chance == 0:
                 number = 0
         arr.append(number)
+    if check_grahp(arr[0:iteration:len(arr)-1]) and arr[iteration] != 0:
+        numb = random.randint(0, size-1)
+        arr[numb] = random.randint(0, 15)
     return arr
 
 
@@ -55,6 +67,5 @@ def builder_hashlib(string, size: int, negatives=None):
     if negatives:
         random.seed(string)
         negatives = random.randint(2, 5)
-        print(negatives)
         matrix = matrix_checker(matrix, negatives)
     return matrix
