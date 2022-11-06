@@ -44,6 +44,7 @@ def matrix_checker(matrix, negatives):
                     min = 5
                     curr_negs += 1
                 curr_row, curr_col = j, k
+                print(curr_row, curr_col)
     return matrix
 
 
