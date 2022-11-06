@@ -34,6 +34,7 @@ def matrix_checker(matrix, negatives):
                     matrix[j][k] *= -1
                     matrix[k][j] *= -1
                     min = 5
+            print(min)
     return matrix
 
 
