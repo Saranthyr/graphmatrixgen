@@ -1,6 +1,4 @@
 from flask import Flask, request, jsonify
-import flask_sqlalchemy
-from sqlalchemy import MetaData
 
 import generator
 import re
