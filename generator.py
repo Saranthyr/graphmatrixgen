@@ -38,7 +38,7 @@ def matrix_checker(matrix, negatives):
                     matrix[k][j] *= -1
                     min = 5
                     curr_negs += 1
-                    curr_row, curr_col = j, k
+                curr_row, curr_col = j, k
     return matrix
 
 
