@@ -30,7 +30,7 @@ def matrix_checker(matrix, negatives):
     curr_negs = 0
     curr_col = 0
     curr_row = 0
-    while curr_negs < negatives or curr_col == curr_row:
+    while curr_negs < negatives and (curr_col != len(matrix) and curr_row != len(matrix)):
         for j in range(len(matrix)):
             for k in range(len(matrix)):
                 if 0 < matrix[j][k] < min:
