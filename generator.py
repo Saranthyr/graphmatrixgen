@@ -12,7 +12,7 @@ def array_gen_hashlib(size, seed, iteration, matrix):
             if i < iteration:
                 number = matrix[i][iteration]
             else:
-                number = random.randint(0, 20)
+                number = random.randint(0, 15)
                 chance = random.randint(0, 100) % zeroes
                 if chance == 0:
                     number = 0
