@@ -11,7 +11,7 @@ def generic():
     return jsonify({'hi there'})
 
 
-@app.route('/generate_with_task_number', methods=['POST'])
+@app.route('/generate', methods=['POST'])
 def generate_base():
     namegroup = request.form.get('namegroup')
     size = int(request.form.get('size'))
