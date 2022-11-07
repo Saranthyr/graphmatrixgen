@@ -19,12 +19,16 @@ def generate_zeroes(matrix, seed, size: int):
     while zero_count < percentage:
         seed_zeroes = hashlib.sha1(bytes(str(seed) + str(zero_count), 'utf-8')).hexdigest()
         random.seed(bytes(str(seed_zeroes), 'utf-8'))
-        i = random.randint(0, size)
-        j = random.randint(0, size)
-        if matrix[i][j] == 0:
-            continue
+        i = random.randint(0, size-1)
+        j = random.randint(0, size-1)
+        curr_num = matrix[i][j]
+        while curr_num == 0:
+            i = random.randint(0, size-1)
+            j = random.randint(0, size-1)
+            curr_num = matrix[i][j]
         else:
             matrix[i][j] = 0
+            zero_count += 1
     return matrix
 
 
@@ -64,7 +68,7 @@ def builder_hashlib(string, size: int, negatives=None):
     for i in range(size):
         seed = hashlib.md5(bytes(string, 'utf-8')).hexdigest()
         matrix.append(array_gen_hashlib(size, seed, i))
-    generate_zeroes(matrix, size, string)
+    generate_zeroes(matrix, string, size)
     if negatives:
         random.seed(string)
         negatives = random.randint(2, 5)
