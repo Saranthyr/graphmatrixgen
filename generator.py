@@ -10,7 +10,7 @@ def check_grahp(arr):
             return True
 
 
-def generate_zeroes(matrix, seed, size):
+def generate_zeroes(matrix, seed, size: int):
     random.seed(bytes(str(seed) , 'utf-8'))
     zeroes = 100 // random.randint(20, 40)
     matrix_size = size*size
