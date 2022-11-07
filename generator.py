@@ -10,16 +10,30 @@ def check_grahp(arr):
             return True
 
 
-def array_gen_hashlib(size, seed, iteration, matrix):
+def generate_zeroes(matrix, seed, size):
+    random.seed(bytes(seed, 'utf-8'))
+    zeroes = 100 // random.randint(20, 40)
+    matrix_size = size*size
+    percentage = matrix_size//zeroes
+    zero_count = 0
+    while zero_count < percentage:
+        seed_zeroes = hashlib.sha1(bytes(str(seed) + str(zero_count), 'utf-8')).hexdigest()
+        random.seed(bytes(str(seed_zeroes), 'utf-8'))
+        i = random.randint(0, size)
+        j = random.randint(0, size)
+        if matrix[i][j] == 0:
+            continue
+        else:
+            matrix[i][j] = 0
+    return matrix
+
+
+def array_gen_hashlib(size, seed, iteration):
     arr = []
     seed += hashlib.sha256(bytes(str(iteration), 'utf-8')).hexdigest()
     random.seed(bytes(seed, 'utf-8'))
-    zeroes = 100 // random.randint(20, 40)
     for i in range(size):
         number = random.randint(0, 15)
-        chance = random.randint(0, 100) % zeroes
-        if chance == 0:
-            number = 0
         arr.append(number)
     if check_grahp(arr[0:iteration:len(arr)-1]) and arr[iteration] != 0:
         numb = random.randint(0, size-1)
@@ -48,8 +62,9 @@ def builder_hashlib(string, size: int, negatives=None):
     string += str(size)
     string = hashlib.sha256(bytes(string, 'utf-8')).hexdigest()
     for i in range(size):
-        seed = hashlib.sha256(bytes(string, 'utf-8')).hexdigest()
-        matrix.append(array_gen_hashlib(size, seed, i, matrix))
+        seed = hashlib.md5(bytes(string, 'utf-8')).hexdigest()
+        matrix.append(array_gen_hashlib(size, seed, i))
+    generate_zeroes(matrix, size, string)
     if negatives:
         random.seed(string)
         negatives = random.randint(2, 5)
