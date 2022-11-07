@@ -3,7 +3,6 @@ import random
 
 
 def check_grahp(arr):
-    num = 0
     for i in range(len(arr)):
         if arr[i] != 0:
             return False
@@ -17,19 +16,10 @@ def array_gen_hashlib(size, seed, iteration, matrix):
     random.seed(bytes(seed, 'utf-8'))
     zeroes = 100 // random.randint(20, 40)
     for i in range(size):
-        if matrix:
-            if i < iteration:
-                number = matrix[i][iteration]
-            else:
-                number = random.randint(0, 15)
-                chance = random.randint(0, 100) % zeroes
-                if chance == 0:
-                    number = 0
-        else:
-            number = random.randint(0, 15)
-            chance = random.randint(0, 100) % zeroes
-            if chance == 0:
-                number = 0
+        number = random.randint(0, 15)
+        chance = random.randint(0, 100) % zeroes
+        if chance == 0:
+            number = 0
         arr.append(number)
     if check_grahp(arr[0:iteration:len(arr)-1]) and arr[iteration] != 0:
         numb = random.randint(0, size-1)
@@ -46,11 +36,7 @@ def matrix_checker(matrix, negatives):
         for j in range(len(matrix)):
             for k in range(len(matrix)):
                 if 0 < matrix[j][k] < min:
-                    if k != j:
-                        matrix[j][k] *= -1
-                        matrix[k][j] *= -1
-                    else:
-                        matrix[j][k] *= -1
+                    matrix[j][k] *= -1
                     min = 5
                     curr_negs += 1
                 curr_row, curr_col = j, k
