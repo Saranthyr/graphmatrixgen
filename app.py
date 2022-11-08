@@ -1,11 +1,20 @@
 from flask import Flask, request, jsonify
-from flask_cors import CORS
+from flask_cors import cross_origin, CORS
 
 import generator
 import re
 
 app = Flask(__name__)
-CORS(app)
+
+
+@app.before_request
+def activate_cors():
+    if request.headers['Referer'] == 'localhost:3000':
+        CORS(app)
+        return request
+    else:
+        return request
+
 
 
 @app.route('/')
