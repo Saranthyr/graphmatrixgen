@@ -26,19 +26,3 @@ def generate_base():
         return jsonify({'matrix': matrix})
     else:
         return jsonify({'msg': 'incorrect name-group string'})
-
-
-# @app.route('/generate_localhost', methods=['POST'])
-# @cross_origin()
-# def generate_base():
-#     namegroup = request.form.get('namegroup')
-#     size = int(request.form.get('size'))
-#     negatives = request.form.get('negatives', None)
-#     if re.fullmatch('[А-Яа-я0-9-]+', namegroup):
-#         if negatives:
-#             matrix = generator.builder_hashlib(namegroup, size, negatives)
-#         else:
-#             matrix = generator.builder_hashlib(namegroup, size)
-#         return jsonify({'matrix': matrix})
-#     else:
-#         return jsonify({'msg': 'incorrect name-group string'})
