@@ -9,7 +9,7 @@ app = Flask(__name__)
 
 @app.before_request
 def activate_cors():
-    if request.headers['Referer'] == 'localhost:3000':
+    if request.referrer == 'localhost:3000':
         CORS(app)
         return request
     else:
