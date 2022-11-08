@@ -7,7 +7,7 @@ import re
 app = Flask(__name__)
 
 
-@app.before_request
+
 def activate_cors():
     if request.referrer == 'localhost:3000':
         CORS(app)
@@ -27,11 +27,22 @@ def generate_base():
     namegroup = request.form.get('namegroup')
     size = int(request.form.get('size'))
     negatives = request.form.get('negatives', None)
-    if re.fullmatch('[А-Яа-я0-9-]+', namegroup):
-        if negatives:
-            matrix = generator.builder_hashlib(namegroup, size, negatives)
+    if request.referrer == 'localhost:3000':
+        CORS(app)
+        if re.fullmatch('[А-Яа-я0-9-]+', namegroup):
+            if negatives:
+                matrix = generator.builder_hashlib(namegroup, size, negatives)
+            else:
+                matrix = generator.builder_hashlib(namegroup, size)
+            return jsonify({'matrix': matrix})
         else:
-            matrix = generator.builder_hashlib(namegroup, size)
-        return jsonify({'matrix': matrix})
+            return jsonify({'msg': 'incorrect name-group string'})
     else:
-        return jsonify({'msg': 'incorrect name-group string'})
+        if re.fullmatch('[А-Яа-я0-9-]+', namegroup):
+            if negatives:
+                matrix = generator.builder_hashlib(namegroup, size, negatives)
+            else:
+                matrix = generator.builder_hashlib(namegroup, size)
+            return jsonify({'matrix': matrix})
+        else:
+            return jsonify({'msg': 'incorrect name-group string'})
