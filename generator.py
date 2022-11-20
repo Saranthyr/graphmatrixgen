@@ -41,7 +41,6 @@ def generate_zeroes_unoriented(matrix, seed, size: int):
     matrix_size = (size * size - size) / 2
     zero_count = 0
     curr_zero_percentage = 0
-    print(zeroes)
     while curr_zero_percentage < zeroes:
         if zero_count > 0:
             curr_zero_percentage = zero_count / matrix_size
