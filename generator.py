@@ -59,14 +59,14 @@ def generate_zeroes_unoriented(matrix, seed, size: int):
             matrix[j][i] = 0
             zero_count += 1
     rows = check_matrix(matrix, size)
-
-    for i in range(len(rows)):
-        random.seed(bytes(seed, 'utf-8'))
-        y = random.randint(0, size-1)
-        if y == i:
-            y = random.randint(0, size - 1)
-        matrix[i][y] = random.randint(1, 15)
-        matrix[y][i] = matrix[i][y]
+    if rows:
+        for i in range(len(rows)):
+            random.seed(bytes(seed, 'utf-8'))
+            y = random.randint(0, size-1)
+            if y == i:
+                y = random.randint(0, size - 1)
+            matrix[i][y] = random.randint(1, 15)
+            matrix[y][i] = matrix[i][y]
     return matrix
 
 
@@ -94,6 +94,7 @@ def array_gen_unoriented(size, seed, iteration, matrix):
         arr.append(number)
     return arr
 
+
 def matrix_checker(matrix, negatives):
     min = 5
     curr_negs = 0
@@ -118,6 +119,7 @@ def unweighted_convert(matrix):
             if matrix[i][j] > 0:
                 matrix[i][j] = 1
     return matrix
+
 
 def builder_hashlib(string, size: int, graph_type: str, negatives=None):
     matrix = []
