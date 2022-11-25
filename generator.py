@@ -124,43 +124,28 @@ def builder_hashlib(string, size: int, graph_type: str, negatives=None):
     matrix = []
     string += str(size)
     string = hashlib.sha256(bytes(string, 'utf-8')).hexdigest()
-    if graph_type == 'ow':
+    graph_type = list(graph_type)
+    if graph_type[0] == 'o':
         for i in range(size):
             seed = hashlib.md5(bytes(string, 'utf-8')).hexdigest()
             matrix.append(array_gen_oriented(size, seed, i))
-        generate_zeroes_oriented(matrix, string, size)
-        if negatives:
-            random.seed(string)
-            negatives = random.randint(2, 5)
-            matrix = matrix_checker(matrix, negatives)
-    if graph_type == 'uw':
+        matrix = generate_zeroes_oriented(matrix, string, size)
+    if graph_type[0] == 'u':
         for i in range(size):
             seed = hashlib.md5(bytes(string, 'utf-8')).hexdigest()
             matrix.append(array_gen_unoriented(size, seed, i, matrix))
-        generate_zeroes_unoriented(matrix, string, size)
-        if negatives:
-            random.seed(string)
-            negatives = random.randint(2, 5)
-            matrix = matrix_checker(matrix, negatives)
-    if graph_type == 'ou':
-        for i in range(size):
-            seed = hashlib.md5(bytes(string, 'utf-8')).hexdigest()
-            matrix.append(array_gen_oriented(size, seed, i))
-        generate_zeroes_oriented(matrix, string, size)
-        unweighted_convert(matrix)
-    if graph_type == 'uu':
+        matrix = generate_zeroes_unoriented(matrix, string, size)
+    if graph_type[0] == 'p':
         for i in range(size):
             seed = hashlib.md5(bytes(string, 'utf-8')).hexdigest()
             matrix.append(array_gen_unoriented(size, seed, i, matrix))
-        generate_zeroes_unoriented(matrix, string, size)
-        unweighted_convert(matrix)
-    if graph_type == 'pu':
-        for i in range(size):
-            seed = hashlib.md5(bytes(string, 'utf-8')).hexdigest()
-            matrix.append(array_gen_unoriented(size, seed, i, matrix))
-        unweighted_convert(matrix)
-    if graph_type == 'pw':
-        for i in range(size):
-            seed = hashlib.md5(bytes(string, 'utf-8')).hexdigest()
-            matrix.append(array_gen_unoriented(size, seed, i, matrix))
+
+    if graph_type[0] == 'o' and negatives:
+        random.seed(string)
+        negatives = random.randint(2, 5)
+        matrix = matrix_checker(matrix, negatives)
+
+    if graph_type[1] == 'u':
+        matrix = unweighted_convert(matrix)
+
     return matrix
