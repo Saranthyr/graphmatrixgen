@@ -41,9 +41,13 @@ def generate_zeroes_unoriented(matrix, seed, size: int):
     matrix_size = (size * size - size) / 2
     zero_count = 0
     curr_zero_percentage = 0
-    while curr_zero_percentage < zeroes:
-        if zero_count > 0:
+    print(zeroes)
+    while True:
+        print(zero_count, curr_zero_percentage)
+        if zero_count >= 0:
             curr_zero_percentage = zero_count / matrix_size
+            if curr_zero_percentage >= zeroes:
+                break
         seed_zeroes = hashlib.sha1(bytes(str(seed) + str(zero_count), 'utf-8')).hexdigest()
         random.seed(bytes(str(seed_zeroes), 'utf-8'))
         i = random.randint(0, size - 1)
@@ -123,6 +127,9 @@ def unweighted_convert(matrix):
 def builder_hashlib(string, size: int, graph_type: str, negatives=None):
     matrix = []
     string += str(size)
+    points = []
+    for i in range(size):
+        points.append(i)
     string = hashlib.sha256(bytes(string, 'utf-8')).hexdigest()
     graph_type = list(graph_type)
     if graph_type[0] == 'o':
@@ -140,12 +147,12 @@ def builder_hashlib(string, size: int, graph_type: str, negatives=None):
             seed = hashlib.md5(bytes(string, 'utf-8')).hexdigest()
             matrix.append(array_gen_unoriented(size, seed, i, matrix))
 
-    if graph_type[0] == 'o' and negatives:
+    if graph_type[0] != 'p' and negatives:
         random.seed(string)
         negatives = random.randint(2, 5)
         matrix = matrix_checker(matrix, negatives)
 
-    if graph_type[1] == 'u':
+    if graph_type[1] == 'u' and matrix != []:
         matrix = unweighted_convert(matrix)
 
     return matrix
