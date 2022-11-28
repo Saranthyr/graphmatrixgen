@@ -33,7 +33,7 @@ def generate_zeroes_oriented(matrix, seed, size: int):
         else:
             matrix[i][j] = 0
             zero_count += 1
-        if (zero_count + 1)/size > zeroes:
+        if (zero_count + 1)/matrix_size > zeroes:
             break
     rows = check_matrix(matrix, size)
     if rows:
@@ -67,7 +67,7 @@ def generate_zeroes_unoriented(matrix, seed, size: int):
             matrix[i][j] = 0
             matrix[j][i] = 0
             zero_count += 1
-        if (zero_count + 1)/size > zeroes:
+        if (zero_count + 1)/matrix_size > zeroes:
             break
     rows = check_matrix(matrix, size)
     if rows:
