@@ -16,10 +16,11 @@ def generate_zeroes_oriented(matrix, seed, size: int):
     zeroes = random.randint(25, 40) / 100
     matrix_size = size * size
     zero_count = 0
-    curr_zero_percentage = 0
-    while curr_zero_percentage < zeroes:
-        if zero_count > 0:
+    while True:
+        if zero_count >= 0:
             curr_zero_percentage = zero_count / matrix_size
+            if curr_zero_percentage >= zeroes:
+                break
         seed_zeroes = hashlib.sha1(bytes(str(seed) + str(zero_count), 'utf-8')).hexdigest()
         random.seed(bytes(str(seed_zeroes), 'utf-8'))
         i = random.randint(0, size-1)
@@ -32,6 +33,14 @@ def generate_zeroes_oriented(matrix, seed, size: int):
         else:
             matrix[i][j] = 0
             zero_count += 1
+        if (zero_count + 1)/size > zeroes:
+            break
+    rows = check_matrix(matrix, size)
+    if rows:
+        for i in range(len(rows)):
+            random.seed(bytes(seed, 'utf-8'))
+            y = random.randint(0, size - 1)
+            matrix[i][y] = random.randint(1, 15)
     return matrix
 
 
@@ -40,10 +49,7 @@ def generate_zeroes_unoriented(matrix, seed, size: int):
     zeroes = random.randint(25, 40) / 100
     matrix_size = (size * size - size) / 2
     zero_count = 0
-    curr_zero_percentage = 0
-    print(zeroes)
     while True:
-        print(zero_count, curr_zero_percentage)
         if zero_count >= 0:
             curr_zero_percentage = zero_count / matrix_size
             if curr_zero_percentage >= zeroes:
@@ -61,6 +67,8 @@ def generate_zeroes_unoriented(matrix, seed, size: int):
             matrix[i][j] = 0
             matrix[j][i] = 0
             zero_count += 1
+        if (zero_count + 1)/size > zeroes:
+            break
     rows = check_matrix(matrix, size)
     if rows:
         for i in range(len(rows)):
@@ -103,14 +111,25 @@ def matrix_checker(matrix, negatives):
     curr_negs = 0
     curr_col = 0
     curr_row = 0
-    while curr_negs < negatives and (curr_col != len(matrix)-1 and curr_row != len(matrix)-1):
-        for j in range(len(matrix)):
-            for k in range(len(matrix)):
-                if 0 < matrix[j][k] < min:
-                    matrix[j][k] *= -1
-                    min = 5
-                    curr_negs += 1
-                curr_row, curr_col = j, k
+    sign = False
+    while curr_col != len(matrix)-1 and curr_row != len(matrix)-1:
+        if sign is False:
+            for j in range(len(matrix)):
+                if sign is False:
+                    for k in range(len(matrix)):
+                        if curr_negs < negatives:
+                            if 0 < matrix[j][k] < min:
+                                matrix[j][k] *= -1
+                                min = 5
+                                curr_negs += 1
+                        else:
+                            sign = True
+                            break
+                        curr_row, curr_col = j, k
+                else:
+                    break
+        else:
+            break
     return matrix
 
 
@@ -147,9 +166,10 @@ def builder_hashlib(string, size: int, graph_type: str, negatives=None):
             seed = hashlib.md5(bytes(string, 'utf-8')).hexdigest()
             matrix.append(array_gen_unoriented(size, seed, i, matrix))
 
-    if graph_type[0] != 'p' and negatives:
+    if graph_type[0] in ['o', 'u'] and negatives:
         random.seed(string)
         negatives = random.randint(2, 5)
+        print(negatives)
         matrix = matrix_checker(matrix, negatives)
 
     if graph_type[1] == 'u' and matrix != []:
