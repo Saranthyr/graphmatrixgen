@@ -3,6 +3,12 @@ import random
 
 
 def check_matrix(matrix, size):
+    """
+        Функция для проверки пустых строк в матрице - т.е. вершин, не связанных с другими
+        Аргументы:
+            matrix - сгенерированная матрица
+            size - размер матрицы
+    """
     zero_row = []
     for i in range(size):
         if all(v == 0 for v in matrix[i]):
@@ -12,6 +18,13 @@ def check_matrix(matrix, size):
 
 
 def generate_zeroes_oriented(matrix, seed, size: int):
+    """
+        Функция для генерации нулей в ориентированном графе
+        Аргументы:
+            matrix - предварительно сгенерированная матрица
+            seed - строка, использующаяся для генерации одинаковых значений
+            size - размер матрицы
+    """
     random.seed(bytes(str(seed), 'utf-8'))
     zeroes = random.randint(25, 40) / 100
     matrix_size = size * size
@@ -45,6 +58,13 @@ def generate_zeroes_oriented(matrix, seed, size: int):
 
 
 def generate_zeroes_unoriented(matrix, seed, size: int):
+    """
+        Функция для генерации нулей в неориентированном графе
+        Аргументы:
+            matrix - предварительно сгенерированная матрица
+            seed - строка, использующаяся для генерации одинаковых значений
+            size - размер матрицы
+    """
     random.seed(bytes(str(seed), 'utf-8'))
     zeroes = random.randint(25, 40) / 100
     matrix_size = (size * size - size) / 2
@@ -82,6 +102,13 @@ def generate_zeroes_unoriented(matrix, seed, size: int):
 
 
 def array_gen_oriented(size, seed, iteration):
+    """
+        Функция для генерации строки матрицы в ориентированном графе
+        Аргументы:
+            seed - строка, использующаяся для генерации одинаковых значений
+            size - размер матрицы
+            iteration - номер строки, начиная с 0
+    """
     arr = []
     seed += hashlib.sha256(bytes(str(iteration), 'utf-8')).hexdigest()
     random.seed(bytes(seed, 'utf-8'))
@@ -92,6 +119,14 @@ def array_gen_oriented(size, seed, iteration):
 
 
 def array_gen_unoriented(size, seed, iteration, matrix):
+    """
+        Функция для генерации строки матрицы в неориентированном графе
+        Аргументы:
+            seed - строка, использующаяся для генерации одинаковых значений
+            size - размер матрицы
+            iteration - номер строки, начиная с 0
+            matrix - уже сгенерированная часть матрицы
+    """
     arr = []
     seed += hashlib.sha256(bytes(str(iteration), 'utf-8')).hexdigest()
     random.seed(bytes(seed, 'utf-8'))
@@ -107,6 +142,12 @@ def array_gen_unoriented(size, seed, iteration, matrix):
 
 
 def matrix_checker(matrix, negatives):
+    """
+        Функция для генерации отрицательных значений для матрицы
+        Аргументы:
+            matrix - сгенерированная матрица
+            negatives - количество отрицательных значений
+    """
     min = 5
     curr_negs = 0
     curr_col = 0
@@ -134,6 +175,11 @@ def matrix_checker(matrix, negatives):
 
 
 def unweighted_convert(matrix):
+    """
+        Функция для конвертации матрицы в невзвешенную
+        Аргументы:
+            matrix - сгенерированная матрица
+    """
     s = len(matrix)
     matrix = matrix
     for i in range(s):
@@ -144,6 +190,14 @@ def unweighted_convert(matrix):
 
 
 def builder_hashlib(string, size: int, graph_type: str, negatives=None):
+    """
+        Основная функция генерации матрицы
+        Аргументы:
+            string - строка namegroup
+            size - размер матрицы
+            graph_type - тип графа
+            negatives - переменная, отвечающаяя за генерацию отрицательных значений
+    """
     matrix = []
     string += str(size)
     points = []
@@ -168,8 +222,7 @@ def builder_hashlib(string, size: int, graph_type: str, negatives=None):
 
     if graph_type[0] in ['o', 'u'] and negatives:
         random.seed(string)
-        negatives = random.randint(2, 5)
-        print(negatives)
+        negatives = random.randint(1, 3)
         matrix = matrix_checker(matrix, negatives)
 
     if graph_type[1] == 'u' and matrix != []:
